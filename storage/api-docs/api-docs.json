@@ -1,0 +1,59 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Project Management API",
+        "description": "API documentation for the project management platform",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/github/redirect": {
+            "get": {
+                "tags": [
+                    "Auth - GitHub"
+                ],
+                "summary": "Rediriger vers la page d'autorisation GitHub",
+                "description": "Redirige l'utilisateur vers la page GitHub OAuth pour autoriser l'application.",
+                "operationId": "142ff0f591d1698e9f4bd39635076df6",
+                "responses": {
+                    "302": {
+                        "description": "Redirection vers github.com/login/oauth/authorize"
+                    }
+                }
+            }
+        },
+        "/api/auth/github/callback": {
+            "get": {
+                "tags": [
+                    "Auth - GitHub"
+                ],
+                "summary": "Callback GitHub OAuth",
+                "description": "Crée/MAJ l'utilisateur et retourne un token Sanctum.",
+                "operationId": "aa7596359b6d521c12ac1d071337548f",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Authentification réussie"
+                    },
+                    "401": {
+                        "description": "Échec de l'authentification GitHub"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth - GitHub",
+            "description": "Authentification des utilisateurs via GitHub OAuth"
+        }
+    ]
+}
