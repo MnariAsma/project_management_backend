@@ -11,12 +11,12 @@
                 "tags": [
                     "Auth - GitHub"
                 ],
-                "summary": "Rediriger vers la page d'autorisation GitHub",
-                "description": "Redirige l'utilisateur vers la page GitHub OAuth pour autoriser l'application.",
+                "summary": "Redirect to the GitHub authorization page",
+                "description": "Redirects the user to the GitHub OAuth page to authorize the application.",
                 "operationId": "142ff0f591d1698e9f4bd39635076df6",
                 "responses": {
                     "302": {
-                        "description": "Redirection vers github.com/login/oauth/authorize"
+                        "description": "Redirect to github.com/login/oauth/authorize"
                     }
                 }
             }
@@ -26,8 +26,8 @@
                 "tags": [
                     "Auth - GitHub"
                 ],
-                "summary": "Callback GitHub OAuth",
-                "description": "Crée/MAJ l'utilisateur et retourne un token Sanctum.",
+                "summary": "GitHub OAuth callback",
+                "description": "Creates/updates the user and returns a Sanctum token.",
                 "operationId": "aa7596359b6d521c12ac1d071337548f",
                 "parameters": [
                     {
@@ -41,10 +41,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Authentification réussie"
+                        "description": "Authentication successful"
                     },
                     "401": {
-                        "description": "Échec de l'authentification GitHub"
+                        "description": "GitHub authentication failed"
                     }
                 }
             }
@@ -53,7 +53,7 @@
     "tags": [
         {
             "name": "Auth - GitHub",
-            "description": "Authentification des utilisateurs via GitHub OAuth"
+            "description": "User authentication via GitHub"
         }
     ]
 }

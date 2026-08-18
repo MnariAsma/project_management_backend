@@ -14,13 +14,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 #[Fillable(['company_id', 'name', 'email', 'role', 'avatar_url', 'github_id', 'github_username'])]
 #[Hidden(['remember_token'])]
 class User extends Authenticatable
 {
 
-    use HasFactory, Notifiable, HasUuids, SoftDeletes;
+    use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
 
     protected function casts(): array
     {
