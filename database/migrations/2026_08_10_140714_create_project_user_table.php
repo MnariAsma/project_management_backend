@@ -11,7 +11,6 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('project_user', function (Blueprint $table) {
-            $table->UUID('id')->primary();
             $table->foreignUuid('project_id')
                 ->constrained()
                 ->restrictOnDelete();
@@ -20,7 +19,8 @@ return new class extends Migration {
                 ->restrictOnDelete();
             $table->timestamps();
             $table->softDeletes();
-            $table->unique(['project_id', 'user_id']);
+
+            $table->primary(['project_id', 'user_id']);
         });
     }
 

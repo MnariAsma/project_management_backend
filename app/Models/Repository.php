@@ -19,6 +19,11 @@ class Repository extends Model
         return $this->belongsTo(Project::class);
     }
 
+        public function sources(): HasMany
+    {
+        return $this->hasMany(RepositorySource::class);
+    }
+
     public function indexation(): HasMany
     {
         return $this->hasMany(RepositoryIndexation::class);
