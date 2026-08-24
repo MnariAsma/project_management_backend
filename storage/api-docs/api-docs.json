@@ -48,12 +48,67 @@
                     }
                 }
             }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh the access token",
+                "description": "Requires a valid, non-expired refresh token sent as Bearer token. Rotates both tokens.",
+                "operationId": "e760c9efdbf86b4c43f957e7849a7bc4",
+                "responses": {
+                    "200": {
+                        "description": "New token pair issued"
+                    },
+                    "401": {
+                        "description": "Refresh token missing, invalid or expired"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Revoke current auth tokens",
+                "operationId": "aa30070c226ed03cad6e2b80ac458520",
+                "responses": {
+                    "200": {
+                        "description": "Logged out"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "Sanctum",
+                "scheme": "bearer"
+            }
         }
     },
     "tags": [
         {
             "name": "Auth - GitHub",
             "description": "User authentication via GitHub"
+        },
+        {
+            "name": "Auth",
+            "description": "Token lifecycle"
         }
     ]
 }
