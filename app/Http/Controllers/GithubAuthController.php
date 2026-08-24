@@ -85,7 +85,7 @@ class GithubAuthController extends Controller
             'github_id' => $githubUser->getId(),
         ], [
             'name' => $githubUser->getNickname(),
-            'company_id' => "01a03116-c8d1-702d-bc90-09434ad6327e",
+            'company_id' => "01a0315d-6353-72ed-964e-b5390e62d234",
             'email' => $githubUser->getEmail(),
             'avatar_url' => $githubUser->getAvatar(),
         ]);
