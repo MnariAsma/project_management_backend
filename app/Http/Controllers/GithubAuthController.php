@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GithubConnection;
 use App\Models\User;
+use App\Services\Auth\TokenService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,8 +17,19 @@ use Throwable;
 
 #[OA\Tag(name: 'Auth - GitHub', description: 'User authentication via GitHub')]
 
+#[OA\SecurityScheme(
+    securityScheme: 'bearerAuth',
+    type: 'http',
+    scheme: 'bearer',
+    bearerFormat: 'Sanctum'
+)]
+
 class GithubAuthController extends Controller
 {
+    public function __construct(private readonly TokenService $tokens)
+    {
+    }
+
     #[OA\Get(
         path: '/api/auth/github/redirect',
         summary: 'Redirect to the GitHub authorization page',
@@ -34,7 +47,7 @@ class GithubAuthController extends Controller
         /** @var GithubProvider $driver */
         $driver = Socialite::driver('github');
         return $driver
-            ->scopes(['user:email'])
+            ->scopes(['user:email','repo'])
             ->stateless()
             ->redirect();
     }
@@ -72,18 +85,28 @@ class GithubAuthController extends Controller
             'github_id' => $githubUser->getId(),
         ], [
             'name' => $githubUser->getNickname(),
-            'company_id' => "01a0103c-962c-71e5-97d3-c3e8966ca0e8",
+            'company_id' => "01a03116-c8d1-702d-bc90-09434ad6327e",
             'email' => $githubUser->getEmail(),
             'avatar_url' => $githubUser->getAvatar(),
         ]);
 
-        $user->tokens()->where('name', 'github-auth-token')->delete();
-        $token = $user->createToken('github-auth-token')->plainTextToken;
+        GithubConnection::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'access_token' => $githubUser->token ?? null,
+                'refresh_token' => $githubUser->refreshToken ?? null,
+                'token_expires_at' => isset($githubUser->expiresIn)
+                    ? now()->addSeconds($githubUser->expiresIn)
+                    : null,
+            ]
+        );
+
+        $tokens = $this->tokens->issuePairFor($user);
 
         return response()->json([
             'message' => 'Authentication successful.',
             'user' => $user,
-            'token' => $token,
+            ...$tokens,
         ]);
     }
 }

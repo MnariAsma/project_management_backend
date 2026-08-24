@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -41,8 +40,8 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function githubConnections(): HasMany
+    public function githubConnection()
     {
-        return $this->hasMany(GithubConnection::class);
+        return $this->hasOne(GithubConnection::class);
     }
 }

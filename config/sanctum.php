@@ -52,6 +52,9 @@ return [
 
     'expiration' => null,
 
+    'access_token_ttl' => (int) env('SANCTUM_ACCESS_TOKEN_TTL', 60),
+    'refresh_token_ttl' => (int) env('SANCTUM_REFRESH_TOKEN_TTL', 60 * 24 * 30),
+
     /*
     |--------------------------------------------------------------------------
     | Token Prefix

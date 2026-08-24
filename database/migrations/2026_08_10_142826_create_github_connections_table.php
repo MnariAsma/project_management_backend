@@ -11,23 +11,17 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('github_connections', function (Blueprint $table) {
-            $table->UUID('id')->primary();
-            $table->foreignUuid('project_id')
-                ->constrained()
-                ->restrictOnDelete();
+            $table->uuid('id')->primary();
             $table->foreignUuid('user_id')
+                ->unique()
                 ->constrained()
-                ->restrictOnDelete();
-
-            // $table->unsignedBigInteger('github_user_id')->nullable();
-            // $table->string('github_username')->nullable();
-            $table->text('access_token'); 
+                ->cascadeOnDelete();
+            $table->text('access_token');
             $table->text('refresh_token')->nullable();
             $table->timestamp('token_expires_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
-            $table->unique(['project_id', 'user_id']);
 
         });
     }

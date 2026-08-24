@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['user_id', 'project_id', 'access_token', 'refresh_token', 'token_expires_at'])]
+#[Fillable(['user_id', 'access_token', 'refresh_token', 'token_expires_at'])]
 #[Hidden(['refresh_token', 'access_token'])]
 class GithubConnection extends Model
 {
@@ -18,12 +18,10 @@ class GithubConnection extends Model
     protected function casts(): array
     {
         return [
+            'access_token' => 'encrypted',
+            'refresh_token' => 'encrypted',
             'token_expires_at' => 'datetime',
         ];
-    }
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
     }
 
     public function user()
@@ -31,6 +29,9 @@ class GithubConnection extends Model
         return $this->belongsTo(User::class);
     }
 
-
-
+    public function isExpired(): bool
+    {
+        return $this->token_expires_at !== null
+            && $this->token_expires_at->isPast();
+    }
 }
