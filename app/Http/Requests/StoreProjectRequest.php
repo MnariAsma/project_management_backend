@@ -24,19 +24,14 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'repositories' => 'required|array|min:1',
-            'repositories.*.github_repo_id' => 'required|string',
-            'repositories.*.name' => 'required|string',
-            'repositories.*.owner' => 'required|string',
-            'repositories.*.github_url' => 'required|string',
-            'repositories.*.github_created_at' => 'nullable|date',
-            'repositories.*.github_updated_at' => 'nullable|date',
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'repositories' => ['required', 'array', 'min:1'],
+            'repositories.*.github_repo_id' => ['required', 'integer'],
         ];
     }
 
-     public function messages(): array
+    public function messages(): array
     {
         return [
             'name.required' => 'The project name is required.',

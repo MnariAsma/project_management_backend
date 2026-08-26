@@ -15,8 +15,8 @@ return new class extends Migration {
                 ->constrained()
                 ->restrictOnDelete();
 
-            $table->string('status')->default('pending'); // pending / running / completed / failed
-            $table->string('trigger_type')->default('initial'); // initial / incremental
+            $table->string('status')->default('pending'); 
+            $table->string('trigger_type')->default('initial');
             $table->unsignedInteger('sources_discovered')->default(0);
             $table->unsignedInteger('sources_processed')->default(0);
             $table->unsignedInteger('chunks_created')->default(0);

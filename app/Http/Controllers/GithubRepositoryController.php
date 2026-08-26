@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Github\GithubService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -14,31 +15,18 @@ class GithubRepositoryController extends Controller
         path: '/api/github/repositories',
         summary: 'Get GitHub repositories',
         description: 'Retrieve the authenticated user\'s GitHub repositories using their connected GitHub account.',
-        security: [
-            ['bearerAuth' => []]
-        ],
+        security: [['bearerAuth' => []]],
         tags: ['GitHub'],
         responses: [
-            new OA\Response(
-                response: 201,
-                description: 'Project created successfully',
-
-            ),
-            new OA\Response(
-                response: 401,
-                description: 'Unauthenticated'
-            ),
+            new OA\Response(response: 200, description: 'List of repositories'),
+            new OA\Response(response: 401, description: 'Unauthenticated'),
             new OA\Response(
                 response: 422,
                 description: 'GitHub account is not connected or validation failed',
                 content: new OA\JsonContent(
                     type: 'object',
                     properties: [
-                        new OA\Property(
-                            property: 'message',
-                            type: 'string',
-                            example: 'No GitHub account connected.'
-                        ),
+                        new OA\Property(property: 'message', type: 'string', example: 'No GitHub account connected.'),
                     ]
                 )
             ),
@@ -54,30 +42,10 @@ class GithubRepositoryController extends Controller
             ], 422);
         }
 
-        $response = Http::withToken($connection->access_token)
-            ->get('https://api.github.com/user/repos', [
-                'per_page' => 100,
-                'sort' => 'updated',
-                'affiliation' => 'owner,collaborator,organization_member',
-            ]);
+        $github = new GithubService($connection);
 
-        if ($response->failed()) {
-            return response()->json([
-                'message' => 'Impossible to get repositories',
-                'error' => $response->json('message'),
-            ], $response->status());
-        }
-
-        $repositories = collect($response->json())->map(fn($repo) => [
-            'github_repo_id' => $repo['id'],
-            'name' => $repo['name'],
-            'full_name' => $repo['full_name'],
-            'private' => $repo['private'],
-            'default_branch' => $repo['default_branch'],
-            'html_url' => $repo['html_url'],
-            'description' => $repo['description'],
-            'updated_at' => $repo['updated_at'],
-        ]);
+        $repositories = collect($github->listRepositories())
+            ->map(fn (array $repo) => $github->formatRepository($repo));
 
         return response()->json(['data' => $repositories]);
     }

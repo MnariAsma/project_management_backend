@@ -42,4 +42,13 @@ class RepositoryIndexation extends Model
             'completed_at' => now(),
         ]);
     }
+
+        public function incrementProgress(int $sourcesProcessed = 1, int $chunksCreated = 0): void
+    {
+        $this->increment('sources_processed', $sourcesProcessed);
+
+        if ($chunksCreated > 0) {
+            $this->increment('chunks_created', $chunksCreated);
+        }
+    }
 }

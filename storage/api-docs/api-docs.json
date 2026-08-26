@@ -58,8 +58,8 @@
                 "description": "Retrieve the authenticated user's GitHub repositories using their connected GitHub account.",
                 "operationId": "7b25f5a0349e0e741b37ff19e124d638",
                 "responses": {
-                    "201": {
-                        "description": "Project created successfully"
+                    "200": {
+                        "description": "List of repositories"
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -122,12 +122,7 @@
                                 "description": "My project description",
                                 "repositories": [
                                     {
-                                        "github_repo_id": "123456789",
-                                        "name": "my-project",
-                                        "owner": "john",
-                                        "github_url": "https://github.com/john/my-project",
-                                        "github_created_at": "2026-08-20T10:00:00Z",
-                                        "github_updated_at": "2026-08-23T15:30:00Z"
+                                        "github_repo_id": 123456789
                                     }
                                 ]
                             }

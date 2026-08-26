@@ -39,6 +39,7 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
+        'api_url' => env('GITHUB_API_URL', 'https://api.github.com'),
     ],
 
 ];
