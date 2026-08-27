@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ChunkRepositoryJob implements ShouldQueue
 {
@@ -123,7 +124,7 @@ class ChunkRepositoryJob implements ShouldQueue
         return $chunks;
     }
 
-    public function failed(\Throwable $exception): void
+    public function failed(Throwable $exception): void
     {
         Log::error("ChunkRepositoryJob failed for source {$this->source->id}: {$exception->getMessage()}");
     }
