@@ -39,7 +39,9 @@ class TokenController extends Controller
         summary: 'Revoke current auth tokens',
         tags: ['Auth'],
         security: [['sanctum' => []]],
-        responses: [new OA\Response(response: 200, description: 'Logged out')]
+        responses: [
+            new OA\Response(response: 200, description: 'Logged out')
+            ]
     )]
     public function logout(Request $request): JsonResponse
     {

@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('github_repo_id')->unique();
             //github_connection_id?
             $table->string('name');
-            // $table->text('description')->nullable();
             $table->string('owner');
             $table->text('github_url');
             $table->timestamp('github_created_at')->nullable();

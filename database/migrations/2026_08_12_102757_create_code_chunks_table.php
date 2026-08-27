@@ -18,10 +18,8 @@ return new class extends Migration {
             $table->longText('chunk_content'); 
             $table->unsignedInteger('token_count')->nullable();
             $table->unsignedInteger('chunk_index')->default(0);
-            $table->json('metadata')->nullable(); // lignes début/fin, etc.
-
-            // $table->string('embedding_model')->nullable();
-            $table->string('embedding_status')->default('pending'); // pending / completed / failed
+            $table->json('metadata')->nullable();
+            $table->string('embedding_status')->default('pending');
 
             $table->timestamps();
             $table->softDeletes();

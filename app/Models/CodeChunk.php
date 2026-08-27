@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Vector;
 use Illuminate\Console\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -44,5 +45,7 @@ class CodeChunk extends Model
     {
         return $query->where('embedding_status', 'pending');
     }
+
+
 
 }

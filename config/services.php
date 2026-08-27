@@ -39,6 +39,14 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
+        'api_url' => env('GITHUB_API_URL', 'https://api.github.com'),
+    ],
+
+    'embedding' => [
+        'url' => env('EMBEDDING_SERVICE_URL'),
+        'model' => env('EMBEDDING_MODEL'),
+        'dimensions' => env('EMBEDDING_DIMENSIONS', 384),
+        'batch_size' => env('EMBEDDING_BATCH_SIZE', 8),
     ],
 
 ];

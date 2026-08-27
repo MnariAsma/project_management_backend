@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\GithubAuthController;
+use App\Http\Controllers\GithubRepositoryController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TokenController;
 
 Route::prefix('auth/github')->group(function () {
@@ -16,6 +18,11 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'abilities:access-api'])->group(function () {
+    Route::prefix('projects')->group(function () {
+        Route::get('/', [ProjectController::class, 'index']);
+        Route::post('/', [ProjectController::class, 'store']);
+    });
+    Route::get('/github/repositories', [GithubRepositoryController::class, 'index']);
 
 });
 

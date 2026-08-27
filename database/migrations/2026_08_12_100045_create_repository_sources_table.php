@@ -15,12 +15,12 @@ return new class extends Migration {
                 ->constrained()
                 ->restrictOnDelete();
 
-            $table->string('source_type'); // file / commit / pull_request
-            $table->string('source_identifier'); // chemin fichier, sha, ou numéro PR
+            $table->string('source_type');
+            $table->string('source_identifier'); 
 
             
-            $table->string('language')->nullable(); // php, js... (surtout pertinent pour 'file')
-            $table->string('content_hash')->nullable(); // pour détecter les changements (réindexation incrémentale)
+            $table->string('language')->nullable();
+            $table->string('content_hash')->nullable(); 
             $table->timestamp('last_indexed_at')->nullable();
 
             $table->timestamps();
