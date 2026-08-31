@@ -49,4 +49,9 @@ return [
         'batch_size' => env('EMBEDDING_BATCH_SIZE', 8),
     ],
 
+    'llm' => [
+        'url' => env('LLM_API_URL'),
+        'model' => env('LLM_MODEL', 'qwen2.5-coder:1.5b'),
+    ],
+
 ];
